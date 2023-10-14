@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Question Bell",
   "version": "1.0",
-  "description": "Plays a sound when a new question is asked.",
+  "description": "Plays a sound when a new question is asked on sis.",
   "permissions": [
     "activeTab",
     "tabs",
@@ -11,8 +11,7 @@
     "background"
     ],
     "host_permissions": [
-        "http://*/*",
-        "https://*/*"
+        "https://sis.appacademy.tools/cohorts/*"
     ],
   "action": {
     "default_popup": "popup.html",

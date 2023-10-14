@@ -1,11 +1,12 @@
 document.getElementById('activate').addEventListener('click', () => {
-    console.log('Activated');
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         const activeTab = tabs[0];
-        chrome.scripting.executeScript({
-            target: { tabId: activeTab.id },
-            function: activateBellSound
-        });
+        if (activeTab.url.startsWith("https://sis.appacademy.tools/cohorts/")) {
+            chrome.scripting.executeScript({
+                target: { tabId: activeTab.id },
+                function: activateBellSound
+            });
+        };
     });
 });
 

@@ -37,7 +37,7 @@ function activateContentScript(tabId, tabUrl) {
                 
                 const existingAudio = document.getElementById("pingSound");
                 if (!existingAudio) {
-                    document.head.appendChild(audioElement);
+                    document.body.appendChild(audioElement);
                     documentObserver.observe(document.body, { childList: true, subtree: true });
                 };
             }
