@@ -12,7 +12,7 @@ document.getElementById('activate').addEventListener('click', () => {
 
 function addBellAndObserver() {
     const audioElement = document.createElement('audio');
-    audioElement.src = 'https://sdipietro.github.io/audio_host/assets/445058__matrixxx__ping-ping.wav';
+    audioElement.src = 'https://raw.githubusercontent.com/sdipietro/audio_host/main/assets/notification-bell-128.png';
     audioElement.id = 'pingSound';
 
     function playPingSound() {
@@ -20,6 +20,25 @@ function addBellAndObserver() {
         if (pingSound) {
             pingSound.play();
         }
+    }
+
+    function handleAudioToggle(bellIdentifier) {
+      bellIdentifier.addEventListener('click', function(e) {
+        const audioEle = document.getElementById("pingSound");
+        
+        if (audioEle) {
+          audioEle.remove();
+          bellIdentifier.setAttribute('status', 'active');
+          bellIdentifier.src = 'https://raw.githubusercontent.com/sdipietro/audio_host/main/assets/Crossed-out-bell.png';
+        } else {
+          const audioElement = document.createElement('audio');
+          audioElement.src = 'https://sdipietro.github.io/audio_host/assets/445058__matrixxx__ping-ping.wav';
+          audioElement.id = 'pingSound';
+          document.body.appendChild(audioElement);
+          bellIdentifier.setAttribute('status', 'active');
+          bellIdentifier.src = 'https://raw.githubusercontent.com/sdipietro/audio_host/main/assets/notification-bell-128.png';
+        }
+      })
     }
 
     const documentObserver = new MutationObserver(function (mutationsList) {
@@ -44,16 +63,18 @@ function addBellAndObserver() {
         }
     });
     
-    const existingAudio = document.getElementById("pingSound");
     const bellIdentifier = document.createElement('img');
     bellIdentifier.id = 'bellIdentifier';
     bellIdentifier.alt = 'Bell Icon';
     bellIdentifier.width = 36;
     bellIdentifier.height = 36;
-    bellIdentifier.src = 'https://raw.githubusercontent.com/sdipietro/audio_host/main/assets/notification-bell-32.png';
+    bellIdentifier.style.cursor = 'pointer';
+    bellIdentifier.setAttribute('status', 'active');
+    bellIdentifier.src = 'https://raw.githubusercontent.com/sdipietro/audio_host/main/assets/notification-bell-128.png';
 
     if (!document.getElementById('bellIdentifier')) {
         document.getElementsByClassName("mb-10")[0].getElementsByTagName('section')[0].appendChild(bellIdentifier);
+        handleAudioToggle(bellIdentifier);
     }
 
     if (!existingAudio) {

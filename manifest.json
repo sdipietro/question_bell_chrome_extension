@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Question Bell",
-  "version": "1.2",
+  "version": "1.3",
   "description": "Plays a sound when a new question is asked on sis.",
   "permissions": [
     "activeTab",
