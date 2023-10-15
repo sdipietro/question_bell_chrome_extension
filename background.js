@@ -1,6 +1,6 @@
 function addBellAndObserver() {
     const audioElement = document.createElement('audio');
-    audioElement.src = 'https://sdipietro.github.io/audio_host/assets/445058__matrixxx__ping-ping.wav';
+    audioElement.src = 'https://sdipietro.github.io/audio_host/assets/ping-ping.wav';
     audioElement.id = 'pingSound';
 
     function playPingSound() {
@@ -20,7 +20,7 @@ function addBellAndObserver() {
           bellIdentifier.src = 'https://raw.githubusercontent.com/sdipietro/audio_host/main/assets/Crossed-out-bell.png';
         } else {
           const audioElement = document.createElement('audio');
-          audioElement.src = 'https://sdipietro.github.io/audio_host/assets/445058__matrixxx__ping-ping.wav';
+          audioElement.src = 'https://sdipietro.github.io/audio_host/assets/ping-ping.wav';
           audioElement.id = 'pingSound';
           document.body.appendChild(audioElement);
           bellIdentifier.setAttribute('status', 'active');
