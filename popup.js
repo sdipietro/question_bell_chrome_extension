@@ -37,6 +37,21 @@ function script() {
       'name': 'Mario',
       'icon': 'https://raw.githubusercontent.com/sdipietro/audio_host/main/assets/mario.gif',
       'sound': 'https://sdipietro.github.io/audio_host/assets/maro-jump-sound-effect.mp3'
+    },
+    {
+      'name': 'Wednesday',
+      'icon': 'https://raw.githubusercontent.com/sdipietro/audio_host/main/assets/wednesday.jpg',
+      'sound': 'https://sdipietro.github.io/audio_host/assets/wednesday.mp3'
+    },
+    {
+      'name': 'Migos',
+      'icon': 'https://raw.githubusercontent.com/sdipietro/audio_host/main/assets/migos.jpeg',
+      'sound': 'https://sdipietro.github.io/audio_host/assets/hey.mp3'
+    },
+    {
+      'name': 'Metal Gear',
+      'icon': 'https://raw.githubusercontent.com/sdipietro/audio_host/main/assets/metal-gear.png',
+      'sound': 'https://sdipietro.github.io/audio_host/assets/metal-gear.mp3'
     }
   ];
 
@@ -194,8 +209,8 @@ function script() {
     const bellIcon = document.createElement('img');
     bellIcon.id = 'bellIcon';
     bellIcon.alt = 'Bell Icon';
-    bellIcon.width = 36;
-    bellIcon.height = 36;
+    bellIcon.style.width = '36px';
+    bellIcon.style.height = '36px';
     bellIcon.style.borderRadius = '20px';
     
     // Check localStorage for existing audio choice first
@@ -321,7 +336,7 @@ function script() {
         }
       });
 
-       // Add audio and bell icon
+      // Add audio and bell icon
       addAudioElement();
       addBellIcon();
 
