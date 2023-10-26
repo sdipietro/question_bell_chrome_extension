@@ -32,10 +32,60 @@ function script() {
       'name': 'Kyle',
       'icon': 'https://raw.githubusercontent.com/sdipietro/audio_host/main/assets/kyle.png',
       'sound': 'https://sdipietro.github.io/audio_host/assets/kyle.mp3'
+    },
+    {
+      'name': 'Mario',
+      'icon': 'https://raw.githubusercontent.com/sdipietro/audio_host/main/assets/mario.gif',
+      'sound': 'https://sdipietro.github.io/audio_host/assets/maro-jump-sound-effect.mp3'
     }
-  ]
+  ];
 
-  // Add dropwdown to toggle sound type if it doesn't exist
+  // Add animations for Mario
+  const styleElement = document.createElement('style');
+  styleElement.type = 'text/css';
+ 
+  const keyframes = `
+    @keyframes jump {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-50px);
+      }
+    }
+  `;
+  const animationRule = `
+    #mario {
+      animation-name: jump;
+      animation-duration: 0.5s;
+      animation-timing-function: ease-in-out;
+      animation-play-state: running;
+    }
+  `;
+  styleElement.textContent = keyframes + animationRule;
+
+  // Add style element to the page if it doesn't exist
+  const existingStyleElement = document.getElementById('animation-style');
+  if (!existingStyleElement) {
+    styleElement.id = 'animation-style';
+    document.head.appendChild(styleElement);
+  }
+
+  // Make Mario jump
+  function handleMarioJump() {
+    const mario = document.querySelector('.Mario');
+    const crossOutIcon = document.getElementById('crossOutIcon');
+
+    if (mario && crossOutIcon.style.display === 'none') {
+        mario.style.animation = 'jump 0.5s ease-in-out';
+  
+        mario.addEventListener('animationend', () => {
+          mario.style.animation = '';
+        }, { once: true });
+    }
+  }
+
+  // Add dropwdown to toggle sound type
   function addDropDown(bellContainer) {
     const dropDownContainer = document.createElement('div');
     dropDownContainer.style.position = 'relative';
@@ -72,8 +122,10 @@ function script() {
     dropDownBox.style.borderRadius = '3px';
     dropDownBox.style.fontSize = '14px';
     dropDownBox.style.width = '130px';
-    dropDownBox.style.background = 'black';
+    dropDownBox.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
     dropDownBox.style.border = '1px solid gray';
+    dropDownBox.style.height = '88px';
+    dropDownBox.style.overflow = 'scroll';
 
     // Populate dropdown with audio options
     audios.forEach(function(audio) {
@@ -86,15 +138,25 @@ function script() {
       // Change audio element and icon when click on dropdown item
       dropDownItem.addEventListener('click', () => {
         addAudioElement(audio.sound);
+        dropDownBox.scrollTop = 0;
         dropDownBox.style.display = 'none';
         const crossOut = document.getElementById('crossOutIcon');
         crossOut.style.display = 'none';
         const icon = document.getElementById('bellIcon');
         icon.src = audio.icon;
 
+        // Add class of Mario if mario sound selected
+        if (audio.name === 'Mario') {
+          icon.classList.add('Mario');
+        } else {
+          icon.classList.remove('Mario');
+        }
+
+        // Add choice to localStorage
         localStorage.setItem('soundChoice', audio.sound);
         localStorage.setItem('audioIcon', audio.icon);
       });
+
       // Hover effect on dropdown items
       dropDownItem.addEventListener('mouseover', () => {
         dropDownItem.style.background = '#222529';
@@ -136,12 +198,13 @@ function script() {
     bellIcon.height = 36;
     bellIcon.style.borderRadius = '20px';
     
+    // Check localStorage for existing audio choice first
     if (localStorage.getItem('audioIcon')) {
       bellIcon.src = localStorage.getItem('audioIcon');
     } else {
       bellIcon.src = 'https://raw.githubusercontent.com/sdipietro/audio_host/main/assets/notification-bell-128.png';
     }
-
+    
     bellContainer.appendChild(bellIcon);
 
     // Add cross out image
@@ -152,15 +215,22 @@ function script() {
     crossOutIcon.height = 36;
     crossOutIcon.src = 'https://raw.githubusercontent.com/sdipietro/audio_host/main/assets/line.png';
     
+    // Display cross out element if no audio
     const audioEle = document.getElementById("pingSound");
-    
     if (audioEle) {
       crossOutIcon.style.display = 'none';
     } else {
       crossOutIcon.style.display = 'block';
     }
-
+    
     bellContainer.appendChild(crossOutIcon);
+    
+    // Add class of Mario if icon is Mario
+    if (bellIcon.src.includes('mario')) {
+      bellIcon.classList.add('Mario');
+    } else {
+      bellIcon.classList.remove('Mario');
+    }
 
     // Create dropdown element
     addDropDown(bellContainer);
@@ -237,6 +307,7 @@ function script() {
                           // Play ping sound when new question is asked
                           if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
                             playSound();
+                            handleMarioJump();
                           }
                         }
                     });
@@ -250,7 +321,7 @@ function script() {
         }
       });
 
-      // Add audio and bell icon
+       // Add audio and bell icon
       addAudioElement();
       addBellIcon();
 
